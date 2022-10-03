@@ -44,10 +44,10 @@ public class MainFrame extends JFrame {
 	ButtonGroup tmp_group, menu_group;
 	File file;
 	
-	String header[] = {"종류", "품목", "가격"};
+	String header[] = {"Menu", "Category", "Price"};
 	String contents[][] = {};
 	
-	String[] label_list = {"주문 사항", "총액"};
+	String[] label_list = {"Order", "Total"};
 	String[] menu_name = {"Latte", "Milk", "Mocha", "ice cream", "tea"};
 	String[] temp_name = {"Hot", "Medium", "Cold"}; //change
 	
@@ -95,15 +95,15 @@ public class MainFrame extends JFrame {
 		btnpanel = new JPanel();
 		btnpanel.setLayout(new GridLayout(0,1,5,0));
 		
-		btn_order = new JButton("주문");
+		btn_order = new JButton("Order");
 		btn_order.addActionListener(new ActionHandler1());
 		btnpanel.add(btn_order);
 		
-		btn_cancel = new JButton("취소");
+		btn_cancel = new JButton("Cancel");
 		btn_cancel.addActionListener(new ActionHandler1());
 		btnpanel.add(btn_cancel);
 		
-		btn_quit = new JButton("종료");
+		btn_quit = new JButton("Exit");
 		btn_quit.addActionListener(new ActionHandler1());
 		btnpanel.add(btn_quit);
 		
@@ -181,7 +181,7 @@ public class MainFrame extends JFrame {
 		File file = new File("data/myorderlist");
 		try {
 			FileWriter fw = new FileWriter(file,true);
-			fw.write("총" + model.getRowCount()+"가지 메뉴"+ "\n");//Line change
+			fw.write("Total" + model.getRowCount()+"menus"+ "\n");//Line change
 			
 			for (int i = 0; i<model.getRowCount();i++) {
 				for(int j = 0; j<model.getColumnCount();j++) {
@@ -191,11 +191,11 @@ public class MainFrame extends JFrame {
 			}
 			fw.write("\n\n");
 			fw.flush();
-			JOptionPane.showMessageDialog(null, "주문 성공.");
+			JOptionPane.showMessageDialog(null, "Order Success.");
 			
 			this.setVisible(false);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "주문 실패.");
+			JOptionPane.showMessageDialog(null, "Order Fail.");
 			e.printStackTrace();
 			
 		}
@@ -215,14 +215,14 @@ public class MainFrame extends JFrame {
 			// TODO Auto-generated method stub
 			String sign1 = e.getActionCommand();
 			
-			if(sign1.equals("주문")) {
+			if(sign1.equals("Order")) {
 				order();
 			}
 			
-			else if (sign1.equals("취소")) {
+			else if (sign1.equals("Cancel")) {
 				cancel();
 			}
-			else if (sign1.equals("종료")) {
+			else if (sign1.equals("Exit")) {
 				System.exit(0);
 			}
 			
