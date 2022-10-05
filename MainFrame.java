@@ -112,7 +112,7 @@ public class MainFrame extends JFrame {
 		Orderpanel.add(btnpanel);
 		
 		Menupanel = new JPanel();
-		Menupanel.setLayout(new GridLayout(0,1,5,5));
+		Menupanel.setLayout(new FlowLayout());
 		
 		Optionpanel = new JPanel();
 		Optionpanel.setPreferredSize(new Dimension(120,100));
