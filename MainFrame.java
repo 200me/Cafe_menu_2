@@ -2,6 +2,7 @@ package testfi;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,16 +57,17 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		
-		this.setSize(600,400); //size set
+		this.setSize(800,400); //size set
 		realsum = 0; // total start
 		
 		Mainpanel = new JPanel();
-		Mainpanel.setPreferredSize(new Dimension(600,400));
+		Mainpanel.setPreferredSize(new Dimension(800,400));
 		Mainpanel.setLayout(new GridLayout(1,2,8,8));  //gridlayout size
 		
 		Orderpanel = new JPanel();
-		Orderpanel.setPreferredSize(new Dimension(280, 390));
-		Orderpanel.setLayout(new BoxLayout(Orderpanel, BoxLayout.Y_AXIS));
+		Orderpanel.setPreferredSize(new Dimension(400, 400));
+		//Orderpanel.setLayout(new BoxLayout(Orderpanel, BoxLayout.Y_AXIS));
+		Orderpanel.setLayout(new FlowLayout());
 		
 		Labelpanel = new JPanel();
 		for(int i = 0; i <label_list.length; i++) {
