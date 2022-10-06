@@ -10,6 +10,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.FileWriter;
+import java.sql.Date;
 import java.io.IOException;
 
 import javax.swing.Box;
@@ -184,6 +185,10 @@ public class MainFrame extends JFrame {
 		try {
 			FileWriter fw = new FileWriter(file,true);
 			fw.write("Total" + model.getRowCount()+"menus"+ "\n");//Line change
+			
+			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+			Date date = new Date(System.currentTimeMillis());
+			fw.write(formatter.format(date) + "\n\n");
 			
 			for (int i = 0; i<model.getRowCount();i++) {
 				for(int j = 0; j<model.getColumnCount();j++) {
