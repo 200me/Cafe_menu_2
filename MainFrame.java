@@ -22,7 +22,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,10 +41,12 @@ public class MainFrame extends JFrame {
 	int price, realsum;
 	
 	JPanel Mainpanel, Orderpanel, Labelpanel, btnpanel, Optionpanel, Menupanel;
+	JTextArea display;
+	JScrollPane scroll;
 	JLabel l_order, l_sum, l_realsum;
 	JTable T_tmp;
 	JButton btn_order, btn_cancel, btn_quit;
-	JButton[] btn_menu;
+	JButton[][] btn_menu;
 	JRadioButton[] tmp_Radio;
 	ButtonGroup tmp_group, menu_group;
 	File file;
@@ -50,8 +55,8 @@ public class MainFrame extends JFrame {
 	String contents[][] = {};
 	
 	String[] label_list = {"Order", "Total"};
-	String[] menu_name = {"Latte", "Milk", "Mocha", "ice cream", "tea"};
-	String[] temp_name = {"Hot", "Medium", "Cold"}; //change
+	String[] menu_name = {"Latte", "Milk", "Mocha", "Ice cream", "tea"};
+	String[] temp_name = {"Hot", "Medium", "Cold"};
 	
 	int[][] price_list = price_init(menu_name.length, temp_name.length);
 	int[][] order_list = order_init(menu_name.length, temp_name.length);
@@ -59,7 +64,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		
 		this.setSize(800,400); //size set
-		realsum = 0; // total start
+		this.setResizable(false);
 		
 		Mainpanel = new JPanel();
 		Mainpanel.setPreferredSize(new Dimension(800,400));
