@@ -75,7 +75,15 @@ public class MainFrame extends JFrame {
 		//Orderpanel.setLayout(new BoxLayout(Orderpanel, BoxLayout.Y_AXIS));
 		Orderpanel.setLayout(new FlowLayout());
 		
+		display = new JTextArea(16, 16);
+	  	display.setEditable(false);
+	  	scroll = new JScrollPane(display);
+	        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	        scroll.setPreferredSize(new Dimension(380,270));
+	        Orderpanel.add(scroll);
+		
 		Labelpanel = new JPanel();
+		
 		for(int i = 0; i <label_list.length; i++) {
 			l_order = new JLabel(label_list[i]);
 			l_order.setPreferredSize(new Dimension(270,15));
