@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.sql.Date;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -42,6 +44,7 @@ public class MainFrame extends JFrame {
 	
 	JPanel Mainpanel, Orderpanel, Labelpanel, btnpanel, Optionpanel, Menupanel;
 	JTextArea display;
+	JTable displayTable;
 	JScrollPane scroll;
 	JLabel l_order, l_sum, l_realsum;
 	JTable T_tmp;
@@ -72,7 +75,6 @@ public class MainFrame extends JFrame {
 		
 		Orderpanel = new JPanel();
 		Orderpanel.setPreferredSize(new Dimension(400, 400));
-		//Orderpanel.setLayout(new BoxLayout(Orderpanel, BoxLayout.Y_AXIS));
 		Orderpanel.setLayout(new FlowLayout());
 		
 		display = new JTextArea(16, 16);
@@ -84,21 +86,17 @@ public class MainFrame extends JFrame {
 		
 		Labelpanel = new JPanel();
 		
-		for(int i = 0; i <label_list.length; i++) {
-			l_order = new JLabel(label_list[i]);
-			l_order.setPreferredSize(new Dimension(270,15));
-			l_order.setOpaque(true);
-			l_order.setBackground(Color.white);
-			Labelpanel.add(l_order);
-			Labelpanel.add(Box.createVerticalStrut(8));
-		}
+		l_order = new JLabel("Total");
+		l_order.setPreferredSize(new Dimension(185,15));
+		l_order.setOpaque(true);
+		l_order.setBackground(Color.white);
+		Labelpanel.add(l_order);
 		
 		l_realsum = new JLabel("0");
-		l_realsum.setPreferredSize(new Dimension(270,15));
+		l_realsum.setPreferredSize(new Dimension(185,15));
 		l_realsum.setOpaque(true);
 		l_realsum.setBackground(Color.white);
 		Labelpanel.add(l_realsum);
-		Labelpanel.add(Box.createVerticalStrut(8));
 		
 		Orderpanel.add(Labelpanel);
 		
@@ -109,18 +107,21 @@ public class MainFrame extends JFrame {
 		Orderpanel.add(Box.createVerticalStrut(8));
 		
 		btnpanel = new JPanel();
-		btnpanel.setLayout(new GridLayout(0,1,5,0));
+		btnpanel.setLayout(new GridLayout(1,3,5,5));
 		
 		btn_order = new JButton("Order");
 		btn_order.addActionListener(new ActionHandler1());
+		btn_order.setPreferredSize(new Dimension(123,50));
 		btnpanel.add(btn_order);
 		
 		btn_cancel = new JButton("Cancel");
 		btn_cancel.addActionListener(new ActionHandler1());
+		btn_cancel.setPreferredSize(new Dimension(123,50));
 		btnpanel.add(btn_cancel);
 		
 		btn_quit = new JButton("Exit");
 		btn_quit.addActionListener(new ActionHandler1());
+		btn_quit.setPreferredSize(new Dimension(123,50));
 		btnpanel.add(btn_quit);
 		
 		Orderpanel.add(btnpanel);
@@ -129,8 +130,8 @@ public class MainFrame extends JFrame {
 		Menupanel.setLayout(new FlowLayout());
 		
 		Optionpanel = new JPanel();
-		Optionpanel.setPreferredSize(new Dimension(120,100));
-		Optionpanel.setLayout(new GridLayout(2,0));
+		Optionpanel.setPreferredSize(new Dimension(250,30));
+		Optionpanel.setLayout(new GridLayout(0,3));
 		
 		tmp_Radio = new JRadioButton[3]; //change
 		tmp_group = new ButtonGroup();
