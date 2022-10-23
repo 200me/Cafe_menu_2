@@ -99,13 +99,7 @@ public class MainFrame extends JFrame {
 		Labelpanel.add(l_realsum);
 		
 		Orderpanel.add(Labelpanel);
-		
-		this.model = new DefaultTableModel(contents, header);
-		this.T_tmp = new JTable(this.model);
-		T_tmp.setPreferredSize(new Dimension(200,100));
-		Orderpanel.add(T_tmp.getTableHeader());
-		Orderpanel.add(Box.createVerticalStrut(8));
-		
+				
 		btnpanel = new JPanel();
 		btnpanel.setLayout(new GridLayout(1,3,5,5));
 		
@@ -147,22 +141,36 @@ public class MainFrame extends JFrame {
 		
 		Menupanel.add(Optionpanel);
 		
-		btn_menu = new JButton[5];
+		int menurow = 5;
+		int menucol = 4;
+		MenuGrid = new JPanel();
+		MenuGrid.setLayout(new GridLayout(menurow,menucol,5,5));
 		
-		for(int i=0; i<menu_name.length; i++) {
-			btn_menu[i] = new JButton(menu_name[i]);
-			btn_menu[i].setPreferredSize(new Dimension(120,100));
-			String menu = menu_name[i];
-			btn_menu[i].addActionListener(new ActionHandler2());
-			Menupanel.add(btn_menu[i]);
+		btn_menu = new JButton[menurow][menucol];
+		for(int row=0; row < menurow; row++) {
+			for(int col=0; col < menucol; col++) {
+				if((row * menucol + col + 1) <= menu_name.length) {
+					int i = (row * menucol + col);
+					btn_menu[row][col] = new JButton(menu_name[i]);
+					String menu = menu_name[i];
+					btn_menu[row][col].addActionListener(new ActionHandler2());
+					btn_menu[row][col].setPreferredSize(new Dimension(90,58));
+					MenuGrid.add(btn_menu[row][col]);
+				} else {
+					btn_menu[row][col] = new JButton("");
+					String menu = "";
+					btn_menu[row][col].setPreferredSize(new Dimension(90,58));
+					MenuGrid.add(btn_menu[row][col]);
+				}
+			}
 		}
-	
-		
+		Menupanel.add(MenuGrid);
+			
 		Mainpanel.add(Orderpanel);
 		Mainpanel.add(Menupanel);
 		this.add(Mainpanel);
 	}
-	
+		
 	public int[][] price_init(int product_num, int temp) {
 		int[][] price_list = new int[product_num][temp];
 		
@@ -198,19 +206,26 @@ public class MainFrame extends JFrame {
 		File file = new File("data/myorderlist");
 		try {
 			FileWriter fw = new FileWriter(file,true);
-			fw.write("Total" + model.getRowCount()+"menus"+ "\n");//Line change
+			
+			fw.write("\n==========================\n");
 			
 			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
 			Date date = new Date(System.currentTimeMillis());
 			fw.write(formatter.format(date) + "\n\n");
 			
-			for (int i = 0; i<model.getRowCount();i++) {
-				for(int j = 0; j<model.getColumnCount();j++) {
-					fw.write((String)model.getValueAt(i,j) + " ");
+			int numberOfMenu = 0;
+			for (int row = 0; row < menu_name.length; row++) {
+				for (int col = 0; col < temp_name.length; col++) {
+					if(order_list[row][col] > 0) {
+						numberOfMenu += order_list[row][col];
+						fw.write(String.format("%2d %6s %10s ", order_list[row][col], temp_name[col], menu_name[row]));
+						fw.write(String.format("%10d\n", price_list[row][col] * order_list[row][col]));
+					}
 				}
-				fw.write("/ ");
 			}
-			fw.write("\n\n");
+			
+			fw.write(String.format("\nTotal %d 's order %s", numberOfMenu, l_realsum.getText()));
+			fw.write("\n==========================\n");
 			fw.flush();
 			JOptionPane.showMessageDialog(null, "Order Success.");
 			
@@ -224,9 +239,8 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void cancel() {
-		this.model.removeRow(this.T_tmp.getSelectedRow());
-		realsum = realsum - price;
-		l_realsum.setText(Integer.toString(realsum));
+		order_list = order_init(menu_name.length, temp_name.length);
+		l_realsum.setText("0");
 	}
 	
 	public class ActionHandler1 implements ActionListener{
